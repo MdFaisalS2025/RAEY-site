@@ -1,26 +1,301 @@
 @import "tailwindcss";
 
+/* ============================================================
+   ProtocolMD — design tokens (v4, "paper")
+   Paper and ink, not dark violet. The entire AI-startup category
+   defaults to a glowing dark canvas; this deliberately reads as a
+   clinical document and technical specification instead — the
+   register medicine actually uses (documents, journals, evidence).
+   Two dark full-bleed bands (the provenance trace, the closing CTA)
+   carry the contrast; everything else is paper. verified/unverified/
+   critical are functional status colors, not brand decoration, and
+   stay strictly semantic.
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ---- Paper — the default surface ---- */
+  --color-paper: #f2f0eb; /* warm bone, page base */
+  --color-paper-raised: #fefdfa; /* cards, inputs, raised surfaces on paper —
+    lightened from #faf9f6, whose ~8-11 RGB delta from paper was
+    imperceptible; this is close to the maximum achievable lift while
+    staying warm rather than reading as stark white */
+  --color-rule: #dad6ce; /* hairlines on paper */
+
+  /* ---- Ink — text on paper ---- */
+  --color-ink: #16181c; /* primary text on paper */
+  --color-ink-2: #5a5e66; /* secondary text on paper */
+  --color-ink-3: #64686f; /* metadata on paper, ~4.9:1 on paper */
+
+  /* ---- Slate — the two dark full-bleed bands ---- */
+  --color-slate: #101216; /* dark band base */
+  --color-slate-rule: #2a2e36; /* hairlines on slate */
+  --color-slate-ink: #ededea; /* primary text on slate */
+  --color-slate-ink-2: #9aa0aa; /* secondary text on slate, ~7.1:1 */
+
+  /* ---- Accent — a pen mark, never a glow ---- */
+  --color-trace: #4b3bd8; /* citations, provenance, interaction, on paper */
+  --color-trace-dim: #dcd8f7; /* trace tint for fills/backgrounds on paper */
+  --color-trace-light: #9b8eff; /* trace, lightened for text/UI on slate —
+    --color-trace measures ~2.6:1 on slate, below the 4.5:1 text minimum
+    and even the 3:1 UI-component minimum; this measures ~6.9:1 */
+
+  /* ---- Status — functional only ---- */
+  --color-verified: #1f7a5c; /* a confirmed, cited value ONLY */
+  --color-unverified: #8f5f0a; /* a flagged/unconfirmed value ONLY —
+    darkened from #a8720c, which measured ~3.7:1 on paper, below the
+    4.5:1 text minimum; this measures ~4.9:1 */
+  --color-critical: #b3261e; /* genuine warnings ONLY, on paper */
+  --color-critical-light: #e2726b; /* critical, lightened for text on slate —
+    --color-critical measures ~2.9:1 on slate; this measures ~6.1:1 */
+
+  /* ---- Fonts (bound to next/font variables in layout.tsx) ---- */
+  --font-serif: var(--font-newsreader);
+  --font-body: var(--font-geist-sans);
+  --font-utility: var(--font-geist-mono);
+
+  /* ---- Section rhythm (single token, used everywhere) ---- */
+  --section-space: 88px;
+
+  /* ---- Grid ---- */
+  --grid-max: 2100px;
+  --grid-gutter: clamp(1.25rem, 4vw, 5rem);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (min-width: 768px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --section-space: 140px;
   }
 }
 
+@theme inline {
+  --color-paper: var(--color-paper);
+  --color-paper-raised: var(--color-paper-raised);
+  --color-rule: var(--color-rule);
+  --color-ink: var(--color-ink);
+  --color-ink-2: var(--color-ink-2);
+  --color-ink-3: var(--color-ink-3);
+  --color-slate: var(--color-slate);
+  --color-slate-rule: var(--color-slate-rule);
+  --color-slate-ink: var(--color-slate-ink);
+  --color-slate-ink-2: var(--color-slate-ink-2);
+  --color-trace: var(--color-trace);
+  --color-trace-dim: var(--color-trace-dim);
+  --color-trace-light: var(--color-trace-light);
+  --color-verified: var(--color-verified);
+  --color-unverified: var(--color-unverified);
+  --color-critical: var(--color-critical);
+  --color-critical-light: var(--color-critical-light);
+
+  --font-serif: var(--font-serif);
+  --font-body: var(--font-body);
+  --font-utility: var(--font-utility);
+
+  --spacing-section: var(--section-space);
+}
+
+html {
+  background: var(--color-paper);
+  color-scheme: light;
+  /* Nav links jump into the pinned 500vh-turned-280vh trace section and
+     other in-page anchors; without this the jump is a hard teleport
+     with nothing to explain what just happened. Reduced motion below
+     forces this back to "auto" with !important, so it never fights
+     that preference. */
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+/* ============================================================
+   Type scale
+   Newsreader (serif, editorial authority) for large statements;
+   Geist (body/UI) for everything read at length; Geist Mono kept
+   rare, for section numbers, version tags, and coordinates only —
+   scarcity is what makes it read as technical rather than decorative.
+   Fluid clamp sizes. Body measure capped at 68ch.
+   ============================================================ */
+
+@layer base {
+  /* Every step is fluid now, not just the three display sizes — 36% of
+     all type on the site was text-meta/text-micro at a fixed 11-12px,
+     and text-body/text-small never scaled with viewport at all. All
+     eight interpolate between a 375px and a 1750px viewport, the same
+     range the original three display clamps already used. */
+  .text-display-1 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(3.25rem, 2.16rem + 4.65vw, 7.25rem);
+    line-height: 1;
+    letter-spacing: -0.015em;
+  }
+  .text-display-2 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(2.125rem, 1.61rem + 2.18vw, 4rem);
+    line-height: 1.06;
+    letter-spacing: -0.008em;
+  }
+  .text-display-3 {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: clamp(1.3125rem, 1.14rem + 0.73vw, 1.9375rem);
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+  }
+  .text-body-lg {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: clamp(1.1875rem, 1.12rem + 0.29vw, 1.4375rem);
+    line-height: 1.62;
+  }
+  .text-body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: clamp(1.09375rem, 1.05rem + 0.18vw, 1.25rem);
+    line-height: 1.68;
+  }
+  .text-small {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: clamp(0.96875rem, 0.94rem + 0.11vw, 1.0625rem);
+    line-height: 1.58;
+  }
+  .text-meta {
+    font-family: var(--font-utility);
+    font-weight: 500;
+    font-size: clamp(0.78125rem, 0.76rem + 0.11vw, 0.875rem);
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .text-micro {
+    font-family: var(--font-utility);
+    font-weight: 400;
+    font-size: clamp(0.71875rem, 0.69rem + 0.11vw, 0.8125rem);
+    line-height: 1.35;
+  }
+
+  .measure {
+    max-width: 68ch;
+  }
+
+  /* The wordmark is always paired with the fixed-size mark icon, so it
+     stays a fixed size rather than fluid like the rest of the scale —
+     it shouldn't grow independently of the icon beside it. A real
+     class instead of an arbitrary text-[19px] Tailwind value. */
+  .text-wordmark {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 21px;
+    letter-spacing: -0.025em;
+  }
+
+  /* ---- Focus ---- */
+  /* One rule for every focusable element on the site, not a hand-rolled
+     focus-visible utility per component (which is how ActionLink — the
+     primary CTA — ended up with no focus style at all). --focus-ring
+     defaults to --color-trace and switches to the lighter --color-
+     trace-light inside any slate-background section, so the ring
+     always has enough contrast against whatever it's sitting on.
+     Components that want a different focus treatment (the form
+     fields' border-color highlight) opt out with focus-visible:outline-
+     none and Tailwind's utility layer wins the cascade over this. */
+  :root {
+    --focus-ring: var(--color-trace);
+  }
+
+  .bg-slate,
+  [data-ambient="slate"] {
+    --focus-ring: var(--color-trace-light);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* ---- Hero entrance ---- */
+  /* A short CSS-only stagger, no animation library — four elements,
+     each 80ms after the last. prefers-reduced-motion already zeroes
+     animation-duration globally (see the media query below), so this
+     collapses to an instant, un-staggered appearance for free. */
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-hero-rise {
+    animation: hero-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* ---- The Archive: CSS 3D document-card field ---- */
+  /* Each card's own drift is a shared keyframe with a per-card
+     animation-duration/-delay set inline (see archive-field.tsx) —
+     same "one shape, randomized timing" trick as the hero's own
+     entrance stagger, cheap enough for two dozen elements that it
+     needs no JS render loop at all. */
+  @keyframes archive-card-drift {
+    0%,
+    100% {
+      transform: translateY(0) rotateZ(0deg);
+    }
+    50% {
+      transform: translateY(-10px) rotateZ(2deg);
+    }
+  }
+
+  .archive-card-drift {
+    animation: archive-card-drift 8s ease-in-out infinite;
+  }
+
+  /* The whole field tilts toward the cursor — --mouse-x/--mouse-y are
+     set by archive-field.tsx's mousemove listener, only on fine-
+     pointer devices with motion allowed; they default to 0 so the
+     field sits flat until a mouse actually moves. */
+  .archive-field-tilt {
+    transform: rotateX(calc(var(--mouse-y, 0) * -9deg)) rotateY(calc(var(--mouse-x, 0) * 9deg));
+    transition: transform 400ms ease-out;
+  }
+
+  /* Individual card hover — lift, scale, and brighten. pointer-events
+     is re-enabled per-card (the field container itself stays
+     pointer-events-none, so gaps between cards never block clicks on
+     the real hero content behind them). */
+  .archive-card {
+    transition:
+      transform 250ms cubic-bezier(0.16, 1, 0.3, 1),
+      filter 250ms ease;
+  }
+
+  .archive-card:hover {
+    transform: scale(1.12) translateZ(30px);
+    filter: brightness(1.15);
+  }
+}
+
+/* ============================================================
+   Motion — prefers-reduced-motion is load-bearing here, not a
+   nicety. Individual components still gate their own JS-driven
+   animation on this; this layer covers CSS-only transitions.
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
