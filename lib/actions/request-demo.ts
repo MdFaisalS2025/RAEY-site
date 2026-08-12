@@ -1,7 +1,9 @@
 "use server";
 
+import { headers } from "next/headers";
 import { Resend } from "resend";
 import { siteConfig, isPlaceholder } from "@/content/site";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 export type RequestDemoState = {
   status: "idle" | "success" | "error";
@@ -35,6 +37,18 @@ export async function requestDemo(
   _prevState: RequestDemoState,
   formData: FormData
 ): Promise<RequestDemoState> {
+  const headerList = await headers();
+  // x-forwarded-for's first entry is the original client on Vercel's
+  // proxy chain; falls back to a shared bucket if it's ever absent
+  // (local dev, or a host that doesn't set it) rather than throwing.
+  const ip = headerList.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (!checkRateLimit(ip)) {
+    return {
+      status: "error",
+      message: "Too many requests from this connection. Try again in a minute.",
+    };
+  }
+
   const name = String(formData.get("name") || "").trim();
   const role = String(formData.get("role") || "").trim();
   const institution = String(formData.get("institution") || "").trim();
