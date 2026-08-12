@@ -20,8 +20,7 @@ export const siteConfig = {
   // when the Resend form is unavailable.
   contactEmail: "TODO(client:contact-email)",
 
-  // TODO(client:linkedin) — company or founder LinkedIn URL.
-  linkedIn: "TODO(client:linkedin)",
+  linkedIn: "https://www.linkedin.com/in/mdfaisalsindhi/",
 } as const;
 
 /**
