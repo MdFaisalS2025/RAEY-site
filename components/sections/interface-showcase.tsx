@@ -21,7 +21,7 @@ function Annotate({ children }: { children: string }) {
 }
 
 /**
- * What using ProtocolMD actually looks like: a protocol library, a
+ * What using Trace AI actually looks like: a protocol library, a
  * question, an answer with inline citations, and the exact source
  * passage those citations point to. Real DOM, not a screenshot and
  * not a generic chat window: a reference tool, not a bot.

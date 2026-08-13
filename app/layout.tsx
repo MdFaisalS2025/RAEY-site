@@ -42,7 +42,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 if (process.env.NODE_ENV === "production" && !process.env.NEXT_PUBLIC_SITE_URL) {
   console.warn(
-    "[protocolmd] NEXT_PUBLIC_SITE_URL is not set. This production build's " +
+    "[trace-ai] NEXT_PUBLIC_SITE_URL is not set. This production build's " +
       "OG images, Twitter cards, and canonical URLs will resolve against " +
       "http://localhost:3000. Set NEXT_PUBLIC_SITE_URL before this deploy goes live."
   );
@@ -84,7 +84,7 @@ const structuredData = {
   "@graph": [
     {
       "@type": "Organization",
-      name: siteConfig.name,
+      name: siteConfig.companyName,
       url: siteUrl,
       description: siteConfig.tagline,
     },

@@ -9,7 +9,7 @@ export function Wordmark({ className = "", monochrome = false }: WordmarkProps) 
     <span
       className={`text-wordmark ${monochrome ? "text-current" : "text-ink"} ${className}`}
     >
-      ProtocolMD
+      Trace AI
     </span>
   );
 }

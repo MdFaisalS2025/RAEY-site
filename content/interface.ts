@@ -1,5 +1,5 @@
 /**
- * The real-interface section: what using ProtocolMD actually looks
+ * The real-interface section: what using Trace AI actually looks
  * like: a protocol library, a question, an answer with inline
  * citations, and the source passage those citations point to. Same
  * synthetic clinical corpus style used elsewhere on the site, kept

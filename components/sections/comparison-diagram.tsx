@@ -91,7 +91,7 @@ export function ComparisonDiagram() {
         </text>
       </g>
 
-      {/* right: ProtocolMD, cited and traceable */}
+      {/* right: Trace AI, cited and traceable */}
       <g
         onMouseEnter={() => setHovered("right")}
         onMouseLeave={() => setHovered(null)}

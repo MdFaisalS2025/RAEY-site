@@ -12,7 +12,7 @@ type MarkProps = {
 };
 
 /**
- * The ProtocolMD mark: three source documents converging on one answer.
+ * The Trace AI mark: three source documents converging on one answer.
  * "Several approved protocols, one verified answer." It's a literal
  * drawing of the product's core mechanic — grounding an answer across a
  * hospital's connected source set — not a cross, caduceus, heartbeat, or
@@ -33,7 +33,7 @@ export function Mark({ className = "", monochrome = false }: MarkProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
-      aria-label="ProtocolMD"
+      aria-label="Trace AI"
     >
       {/* connectors — three sources, one destination */}
       {MARK_GEOMETRY.connectors.map((d, i) => (

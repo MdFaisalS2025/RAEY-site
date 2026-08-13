@@ -35,5 +35,5 @@ export const transparencyContent = {
   researchLinkLabel: "Read the full pilot log",
   researchLinkHref: "/research",
   disclaimer:
-    "ProtocolMD is not a substitute for clinical judgment. It's built for protocol retrieval and verification.",
+    "Trace AI is not a substitute for clinical judgment. It's built for protocol retrieval and verification.",
 } as const;

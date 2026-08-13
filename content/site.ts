@@ -4,7 +4,11 @@
  */
 
 export const siteConfig = {
-  name: "ProtocolMD",
+  name: "Trace AI",
+  // The legal/company entity, distinct from the product name above —
+  // used in structured data (app/layout.tsx's JSON-LD Organization)
+  // and anywhere the company itself, not the product, needs naming.
+  companyName: "Trace Labs",
   tagline: "Hospital-approved answers, not internet guesses.",
 
   nav: [
