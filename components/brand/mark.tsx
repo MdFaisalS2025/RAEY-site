@@ -33,7 +33,7 @@ export function Mark({ className = "", monochrome = false }: MarkProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
-      aria-label="Trace AI"
+      aria-label="Trace Labs"
     >
       {/* connectors — three sources, one destination */}
       {MARK_GEOMETRY.connectors.map((d, i) => (

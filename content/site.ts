@@ -4,11 +4,15 @@
  */
 
 export const siteConfig = {
-  name: "Trace AI",
-  // The legal/company entity, distinct from the product name above —
-  // used in structured data (app/layout.tsx's JSON-LD Organization)
-  // and anywhere the company itself, not the product, needs naming.
+  // The site/company name — header, page title, footer, and structured
+  // data all use this. Distinct from the product name below: Trace Labs
+  // is who built it, Trace AI is the product itself.
+  name: "Trace Labs",
   companyName: "Trace Labs",
+  // The product name — the AI model/system this site markets. Used in
+  // copy that talks about what the product does (hero, comparison,
+  // transparency disclaimer, trace mechanism), not in site chrome.
+  productName: "Trace AI",
   tagline: "Hospital-approved answers, not internet guesses.",
 
   nav: [
