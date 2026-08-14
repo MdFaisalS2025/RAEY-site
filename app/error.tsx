@@ -21,7 +21,7 @@ export default function ErrorPage({
     // No analytics/error-reporting wired up on this site yet (see the
     // technical audit) — logging to the console is honest about that
     // rather than pretending an error-tracking call happened.
-    console.error("[trace-ai] unhandled error boundary triggered");
+    console.error("[raey] unhandled error boundary triggered");
   }, []);
 
   return (

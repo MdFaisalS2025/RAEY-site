@@ -91,7 +91,7 @@ export function ComparisonDiagram() {
         </text>
       </g>
 
-      {/* right: Trace AI, cited and traceable */}
+      {/* right: RAEY, cited and traceable */}
       <g
         onMouseEnter={() => setHovered("right")}
         onMouseLeave={() => setHovered(null)}

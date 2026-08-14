@@ -4,15 +4,9 @@
  */
 
 export const siteConfig = {
-  // The site/company name — header, page title, footer, and structured
-  // data all use this. Distinct from the product name below: Trace Labs
-  // is who built it, Trace AI is the product itself.
-  name: "Trace Labs",
-  companyName: "Trace Labs",
-  // The product name — the AI model/system this site markets. Used in
-  // copy that talks about what the product does (hero, comparison,
-  // transparency disclaimer, trace mechanism), not in site chrome.
-  productName: "Trace AI",
+  // One name for the company and the AI model both.
+  name: "RAEY",
+  companyName: "RAEY",
   tagline: "Hospital-approved answers, not internet guesses.",
 
   nav: [

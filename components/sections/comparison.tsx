@@ -43,14 +43,14 @@ export function Comparison() {
 
         <div className="col-span-12 mt-10 md:col-span-6 md:mt-0 md:pl-10">
           <Reveal variant="fade" delay={40}>
-            <p className="text-meta text-trace">{c.columns.traceAi.label}</p>
+            <p className="text-meta text-trace">{c.columns.raey.label}</p>
           </Reveal>
           <ul className="mt-5 space-y-4">
             <RevealStagger
               as="li"
               stagger={45}
               itemClassName="text-body text-ink"
-              items={c.columns.traceAi.points}
+              items={c.columns.raey.points}
             />
           </ul>
         </div>

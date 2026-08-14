@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Newsreader } from "next/font/google";
+import { Geist, Geist_Mono, Source_Serif_4 } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { AmbientField } from "@/components/ambient/ambient-field";
@@ -8,9 +8,9 @@ import "./globals.css";
 
 // Self-hosted via next/font — downloaded at build time, served from our own
 // origin, zero runtime request to Google and zero licensing cost. Geist
-// carries UI and body text; Newsreader is the editorial serif for large
-// statements, the register this rebuild is aiming for — a clinical
-// document and technical specification, not a SaaS product page.
+// carries UI and body text; Source Serif 4 is the upright editorial serif
+// for large statements — restrained and text-book, not the swooping
+// italic register a consumer AI-startup site would reach for.
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,11 +25,11 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
   subsets: ["latin"],
-  weight: ["400", "500"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600"],
+  style: ["normal"],
   display: "swap",
 });
 
@@ -42,7 +42,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 if (process.env.NODE_ENV === "production" && !process.env.NEXT_PUBLIC_SITE_URL) {
   console.warn(
-    "[trace-ai] NEXT_PUBLIC_SITE_URL is not set. This production build's " +
+    "[raey] NEXT_PUBLIC_SITE_URL is not set. This production build's " +
       "OG images, Twitter cards, and canonical URLs will resolve against " +
       "http://localhost:3000. Set NEXT_PUBLIC_SITE_URL before this deploy goes live."
   );
@@ -100,7 +100,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink">
         <script

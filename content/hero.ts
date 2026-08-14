@@ -7,7 +7,7 @@
 export const heroContent = {
   eyebrow: "Protocol intelligence for hospitals",
   headline: "Your hospital already has the answer.",
-  headlineAccent: "Trace AI makes it findable.",
+  headlineAccent: "RAEY helps you trust it.",
   sub: "It cites the exact passage behind every answer, and flags what it can't verify.",
 
   // The full-bleed rule beneath the hero, three short facts replacing

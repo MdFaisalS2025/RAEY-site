@@ -28,7 +28,7 @@ export function Transparency() {
         </Reveal>
 
         <Reveal delay={80} className="col-span-12 mt-4 md:col-span-5 md:col-start-8 md:mt-0">
-          <blockquote className="text-display-3 border-l-2 border-[color:var(--color-trace-light)] pl-6 font-serif italic text-slate-ink">
+          <blockquote className="text-display-3 border-l-2 border-[color:var(--color-trace-light)] pl-6 font-serif text-slate-ink">
             {c.quote}
           </blockquote>
         </Reveal>

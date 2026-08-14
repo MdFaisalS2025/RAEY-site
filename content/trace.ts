@@ -3,7 +3,7 @@
  * on a canvas (see components/trace/trace-scene.ts), one caption per
  * beat, shown in the left margin as the visitor scrolls through the
  * pinned section. This is the whole product thesis rendered visually:
- * Trace AI does not invent an answer, it locates one inside approved
+ * RAEY does not invent an answer, it locates one inside approved
  * hospital documents and shows exactly where it came from.
  */
 export const traceContent = {

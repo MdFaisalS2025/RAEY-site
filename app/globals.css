@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ============================================================
-   ProtocolMD — design tokens (v4, "paper")
+   RAEY — design tokens (v4, "paper")
    Paper and ink, not dark violet. The entire AI-startup category
    defaults to a glowing dark canvas; this deliberately reads as a
    clinical document and technical specification instead — the
@@ -49,7 +49,7 @@
     --color-critical measures ~2.9:1 on slate; this measures ~6.1:1 */
 
   /* ---- Fonts (bound to next/font variables in layout.tsx) ---- */
-  --font-serif: var(--font-newsreader);
+  --font-serif: var(--font-source-serif);
   --font-body: var(--font-geist-sans);
   --font-utility: var(--font-geist-mono);
 
@@ -112,11 +112,12 @@ body {
 
 /* ============================================================
    Type scale
-   Newsreader (serif, editorial authority) for large statements;
-   Geist (body/UI) for everything read at length; Geist Mono kept
-   rare, for section numbers, version tags, and coordinates only —
-   scarcity is what makes it read as technical rather than decorative.
-   Fluid clamp sizes. Body measure capped at 68ch.
+   Source Serif 4, upright, for large statements — a textbook serif,
+   not an editorial-magazine italic; Geist (body/UI) for everything
+   read at length; Geist Mono kept rare, for section numbers, version
+   tags, and coordinates only — scarcity is what makes it read as
+   technical rather than decorative. Fluid clamp sizes. Body measure
+   capped at 68ch.
    ============================================================ */
 
 @layer base {
@@ -127,14 +128,14 @@ body {
      range the original three display clamps already used. */
   .text-display-1 {
     font-family: var(--font-serif);
-    font-weight: 500;
+    font-weight: 600;
     font-size: clamp(3.25rem, 2.16rem + 4.65vw, 7.25rem);
     line-height: 1;
     letter-spacing: -0.015em;
   }
   .text-display-2 {
     font-family: var(--font-serif);
-    font-weight: 500;
+    font-weight: 600;
     font-size: clamp(2.125rem, 1.61rem + 2.18vw, 4rem);
     line-height: 1.06;
     letter-spacing: -0.008em;

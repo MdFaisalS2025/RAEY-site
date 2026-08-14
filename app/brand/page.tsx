@@ -107,7 +107,7 @@ export default function BrandPage() {
         <dl className="text-small mt-4 space-y-2 text-ink-2">
           <div className="flex gap-2">
             <dt className="w-20 shrink-0 text-ink-3">Display</dt>
-            <dd className="text-display-3 !font-normal font-serif text-ink">Newsreader</dd>
+            <dd className="text-display-3 !font-normal font-serif text-ink">Source Serif 4</dd>
           </div>
           <div className="flex gap-2">
             <dt className="w-20 shrink-0 text-ink-3">Body / UI</dt>

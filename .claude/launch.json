@@ -2,13 +2,13 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "protocolmd-dev",
+      "name": "raey-dev",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000
     },
     {
-      "name": "protocolmd-prod",
+      "name": "raey-prod",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "start"],
       "port": 3000

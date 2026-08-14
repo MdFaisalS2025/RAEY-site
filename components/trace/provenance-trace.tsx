@@ -145,7 +145,7 @@ export function ProvenanceTrace() {
   return (
     <section
       id="how-it-works"
-      aria-label="How Trace AI finds an answer"
+      aria-label="How RAEY finds an answer"
       data-ambient="slate"
       className="relative scroll-mt-20 bg-slate"
     >

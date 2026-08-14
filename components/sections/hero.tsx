@@ -27,7 +27,7 @@ export function Hero() {
           <h1 className="animate-hero-rise text-display-1 mt-5 text-ink" style={{ animationDelay: "80ms" }}>
             {heroContent.headline}
             <br />
-            <span className="italic">{heroContent.headlineAccent}</span>
+            <span className="text-trace">{heroContent.headlineAccent}</span>
           </h1>
           <p
             className="animate-hero-rise text-body-lg mt-6 max-w-[42ch] text-ink-2"
