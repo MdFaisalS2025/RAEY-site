@@ -29,6 +29,9 @@ export function Footer() {
               LinkedIn
             </a>
           )}
+          <Link href="/product" className="transition-colors hover:text-ink">
+            Product
+          </Link>
           <Link href="/research" className="transition-colors hover:text-ink">
             Research
           </Link>
