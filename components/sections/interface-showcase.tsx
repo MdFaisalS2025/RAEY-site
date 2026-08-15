@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { Grid } from "@/components/layout/grid";
 import { Section } from "@/components/layout/section";
 import { SectionLabel } from "@/components/layout/section-label";
@@ -95,6 +96,12 @@ export function InterfaceShowcase() {
           <p className="text-micro text-ink-3">
             {c.documents.length} approved protocols, each fully interactive
           </p>
+          <Link
+            href="/product"
+            className="text-micro mt-2 inline-block text-trace hover:opacity-70 md:block"
+          >
+            See the full platform &rarr;
+          </Link>
         </Reveal>
 
         <Reveal delay={80} className="col-span-12 mt-10">

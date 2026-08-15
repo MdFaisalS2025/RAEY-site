@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import Link from "next/link";
 import { siteConfig } from "@/content/site";
 
 const FOCUSABLE_SELECTOR =
@@ -96,16 +97,27 @@ export function MobileNav() {
           id={panelId}
           className="fixed inset-x-0 top-16 z-30 flex flex-col gap-1 border-t border-rule bg-paper p-4"
         >
-          {siteConfig.nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className="text-body rounded-sm px-2 py-3 text-ink transition-colors hover:bg-paper-raised"
-            >
-              {item.label}
-            </a>
-          ))}
+          {siteConfig.nav.map((item) =>
+            item.href.startsWith("#") ? (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="text-body rounded-sm px-2 py-3 text-ink transition-colors hover:bg-paper-raised"
+              >
+                {item.label}
+              </a>
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="text-body rounded-sm px-2 py-3 text-ink transition-colors hover:bg-paper-raised"
+              >
+                {item.label}
+              </Link>
+            )
+          )}
           <a
             href={siteConfig.cta.href}
             onClick={() => setOpen(false)}
