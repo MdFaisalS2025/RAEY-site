@@ -26,12 +26,15 @@ function stripNewlines(value: string) {
 }
 
 // Never interpolate a raw TODO(...) placeholder into user-facing text —
-// if the real contact address hasn't been set yet, say that plainly
-// instead of printing the token itself.
+// if the real contact address hasn't been set yet, fall back to
+// LinkedIn (already a real URL) rather than leaving the visitor with
+// no way to reach anyone.
 const FALLBACK_MESSAGE = (reason: string) =>
-  isPlaceholder(siteConfig.contactEmail)
-    ? `${reason} A direct contact route isn't published yet, sorry about that.`
-    : `${reason} Reach us directly at ${siteConfig.contactEmail} instead.`;
+  !isPlaceholder(siteConfig.contactEmail)
+    ? `${reason} Reach us directly at ${siteConfig.contactEmail} instead.`
+    : !isPlaceholder(siteConfig.linkedIn)
+      ? `${reason} Reach us on LinkedIn instead: ${siteConfig.linkedIn}`
+      : `${reason} A direct contact route isn't published yet, sorry about that.`;
 
 export async function requestDemo(
   _prevState: RequestDemoState,

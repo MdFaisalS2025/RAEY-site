@@ -9,6 +9,15 @@ export const metadata: Metadata = {
   title: "Research",
   description: researchContent.sub,
   alternates: { canonical: "/research" },
+  openGraph: {
+    title: "Research · RAEY",
+    description: researchContent.sub,
+    url: "/research",
+  },
+  twitter: {
+    title: "Research · RAEY",
+    description: researchContent.sub,
+  },
 };
 
 // The full pilot log, verbatim from content/research.ts — every number

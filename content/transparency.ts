@@ -17,7 +17,7 @@ export const transparencyContent = {
   roadmap: [
     {
       label: "Built",
-      body: "Citation-grounded question answering. Numeric verification and redaction of unconfirmed values.",
+      body: "Citation-grounded question answering, numeric verification, retrieval and evidence checking, a governance workflow, and role-based access. The full platform is on the /product page.",
     },
     {
       label: "Tested",
@@ -25,11 +25,11 @@ export const transparencyContent = {
     },
     {
       label: "Needs validation",
-      body: "A real hospital corpus, clinician review, and evaluation on a held-out sample.",
+      body: "A hospital's own corpus, clinician review, and evaluation on a held-out sample.",
     },
     {
       label: "Not claimed",
-      body: "Clinical validation. FDA clearance. HIPAA compliance. Deployment or clinical use in any live setting.",
+      body: "Clinical validation. FDA clearance. HIPAA compliance. No hospital has completed a deployment yet.",
     },
   ],
   researchLinkLabel: "Read the full pilot log",

@@ -8,7 +8,7 @@ they're filled in and redeploy.
 | Marker | Where | What's needed |
 |---|---|---|
 | `NEXT_PUBLIC_SITE_URL` | Vercel env settings | Production domain, once purchased/verified. Used for OG/canonical URLs (see `app/layout.tsx`); resolves to localhost in dev and the Vercel preview URL in prod until set. |
-| `TODO(client:contact-email)` | `content/site.ts` | Real inbox for demo requests and the Resend-down fallback. Until set, the footer and `/privacy` show honest "coming soon" text instead of a broken link, and the form's error state omits the fallback contact line. |
+| `TODO(client:contact-email)` | `content/site.ts` | Real inbox for demo requests and the Resend-down fallback. Until set, the footer, `/privacy`, and the form's error state all fall back to the LinkedIn URL below instead of a dead end. |
 | ~~`TODO(client:linkedin)`~~ | `content/site.ts` | Done — set to https://www.linkedin.com/in/mdfaisalsindhi/ |
 
 **Also required before launch, not before build:**

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Hero } from "@/components/sections/hero";
 import { Problem } from "@/components/sections/problem";
 import { ProvenanceTrace } from "@/components/trace/provenance-trace";
@@ -6,6 +7,16 @@ import { Comparison } from "@/components/sections/comparison";
 import { UseCases } from "@/components/sections/use-cases";
 import { Transparency } from "@/components/sections/transparency";
 import { Demo } from "@/components/sections/demo";
+import { heroContent } from "@/content/hero";
+
+// The root layout already supplies a title/description default, but the
+// homepage is the page most likely to be shared directly, so it gets a
+// hand-written description instead of inheriting the generic tagline.
+export const metadata: Metadata = {
+  description: heroContent.sub,
+  openGraph: { description: heroContent.sub, url: "/" },
+  twitter: { description: heroContent.sub },
+};
 
 // Eight sections, one narrative: hero states the idea, problem shows
 // what's actually wrong, the provenance trace shows how the product

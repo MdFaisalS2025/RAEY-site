@@ -10,8 +10,17 @@ import { productContent as c } from "@/content/product";
 
 export const metadata: Metadata = {
   title: "Product",
-  description: c.hero.sub,
+  description: c.hero.metaDescription,
   alternates: { canonical: "/product" },
+  openGraph: {
+    title: `Product · RAEY`,
+    description: c.hero.metaDescription,
+    url: "/product",
+  },
+  twitter: {
+    title: `Product · RAEY`,
+    description: c.hero.metaDescription,
+  },
 };
 
 // The deep-dive companion to the homepage: everything the homepage's
@@ -59,6 +68,7 @@ export default function ProductPage() {
                 <div key={role.name} className="border-t border-rule pt-5">
                   <p className="text-small font-medium text-ink">{role.name}</p>
                   <p className="text-body mt-2 text-ink-2">{role.body}</p>
+                  <p className="text-micro mt-2 text-ink-3">{role.dashboard}</p>
                 </div>
               ))}
             />
@@ -88,14 +98,51 @@ export default function ProductPage() {
               </Reveal>
             ))}
           </div>
+
+          <Reveal delay={c.pipeline.steps.length * 40} className="col-span-12">
+            <p className="text-small mt-10 max-w-[62ch] text-ink-3">{c.pipeline.footnote}</p>
+          </Reveal>
+        </Grid>
+      </Section>
+
+      {/* Citations */}
+      <Section size="tight">
+        <Grid>
+          <Reveal className="col-span-12 md:col-span-7">
+            <SectionLabel index="03" label={c.citations.label} />
+            <h2 className="text-display-2 mt-4 max-w-[18ch] text-ink">{c.citations.heading}</h2>
+            <p className="text-body mt-4 max-w-[52ch] text-ink-2">{c.citations.sub}</p>
+          </Reveal>
+
+          <div className="col-span-12 mt-10 space-y-4 md:col-span-9 md:col-start-4">
+            <RevealStagger
+              stagger={45}
+              items={c.citations.rungs.map((rung) => (
+                <div
+                  key={rung.name}
+                  className="grid grid-cols-1 gap-1 border-t border-rule pt-4 md:grid-cols-[minmax(9rem,14rem)_1fr] md:gap-4"
+                >
+                  <p className="text-meta text-ink-3">{rung.name}</p>
+                  <p className="text-body text-ink-2">{rung.body}</p>
+                </div>
+              ))}
+            />
+          </div>
+
+          <Reveal
+            delay={c.citations.rungs.length * 45}
+            className="col-span-12 mt-8 md:col-span-9 md:col-start-4"
+          >
+            <p className="text-small max-w-[62ch] text-ink-3">{c.citations.note}</p>
+          </Reveal>
         </Grid>
       </Section>
 
       {/* From an answer */}
-      <Section>
+      <Section className="bg-paper-raised">
         <Grid>
           <Reveal className="col-span-12 md:col-span-7">
-            <SectionLabel index="03" label={c.actions.label} />
+            <SectionLabel index="04" label={c.actions.label} />
             <h2 className="text-display-2 mt-4 max-w-[18ch] text-ink">{c.actions.heading}</h2>
             <p className="text-body mt-4 max-w-[52ch] text-ink-2">{c.actions.sub}</p>
           </Reveal>
@@ -104,7 +151,7 @@ export default function ProductPage() {
             <RevealStagger
               stagger={50}
               items={c.actions.items.map((item) => (
-                <div key={item.name} className="border border-rule bg-paper-raised p-5">
+                <div key={item.name} className="border border-rule bg-paper p-5">
                   <p className="text-small font-medium text-ink">{item.name}</p>
                   <p className="text-small mt-2 text-ink-2">{item.body}</p>
                 </div>
@@ -115,11 +162,12 @@ export default function ProductPage() {
       </Section>
 
       {/* Beyond chat */}
-      <Section className="bg-paper-raised">
+      <Section>
         <Grid>
           <Reveal className="col-span-12 md:col-span-7">
-            <SectionLabel index="04" label={c.beyond.label} />
+            <SectionLabel index="05" label={c.beyond.label} />
             <h2 className="text-display-2 mt-4 max-w-[18ch] text-ink">{c.beyond.heading}</h2>
+            <p className="text-body mt-4 max-w-[52ch] text-ink-2">{c.beyond.sub}</p>
           </Reveal>
 
           <div className="col-span-12 mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 md:grid-cols-3">
@@ -140,7 +188,7 @@ export default function ProductPage() {
       <Section id="integration" ambient="slate" className="bg-slate">
         <Grid>
           <Reveal className="col-span-12 md:col-span-6">
-            <SectionLabel index="05" label={c.integration.label} variant="slate" />
+            <SectionLabel index="06" label={c.integration.label} variant="slate" />
             <h2 className="text-display-2 mt-4 max-w-[18ch] text-slate-ink">
               {c.integration.heading}
             </h2>
@@ -161,11 +209,38 @@ export default function ProductPage() {
         </Grid>
       </Section>
 
+      {/* Under the hood */}
+      <Section size="tight" className="bg-paper-raised">
+        <Grid>
+          <Reveal className="col-span-12 md:col-span-8">
+            <SectionLabel index="07" label={c.spec.label} />
+            <h2 className="text-display-2 mt-4 max-w-[18ch] text-ink">{c.spec.heading}</h2>
+            <p className="text-body mt-4 max-w-[56ch] text-ink-2">{c.spec.sub}</p>
+          </Reveal>
+
+          <div className="col-span-12 mt-10 grid grid-cols-1 gap-x-12 gap-y-0 md:grid-cols-2">
+            <RevealStagger
+              stagger={30}
+              items={c.spec.rows.map((row) => (
+                <div
+                  key={row.term}
+                  className="grid grid-cols-1 gap-0.5 border-t border-rule py-3 md:grid-cols-[minmax(9rem,14rem)_1fr] md:gap-4"
+                >
+                  <p className="text-meta text-ink-3">{row.term}</p>
+                  <p className="text-small text-ink">{row.value}</p>
+                </div>
+              ))}
+            />
+          </div>
+        </Grid>
+      </Section>
+
       {/* Honesty callout */}
       <Section size="tight">
         <Grid>
           <Reveal className="col-span-12 md:col-span-8">
             <p className="text-body max-w-[64ch] text-ink-2">{c.honesty.body}</p>
+            <p className="text-small mt-4 max-w-[64ch] text-ink-3">{c.honesty.notClaimed}</p>
             <Link
               href={c.honesty.linkHref}
               className="text-small mt-4 inline-flex items-center gap-1.5 border-b border-current pb-0.5 font-medium text-ink transition-opacity hover:opacity-70"

@@ -6,7 +6,22 @@ import { SectionLabel } from "@/components/layout/section-label";
 import { useCanAnimateDesktop } from "@/lib/motion";
 import { traceContent } from "@/content/trace";
 import { StaticTraceFrame } from "./static-trace-frame";
-import { drawTraceFrame, beatIndexForProgress, type TraceColors } from "./trace-scene";
+import {
+  drawTraceFrame,
+  beatIndexForProgress,
+  TRACE_BEAT_COUNT,
+  type TraceColors,
+} from "./trace-scene";
+
+// The canvas's BEAT_THRESHOLDS and content/trace.ts's `beats` array have
+// to stay the same length, or `traceContent.beats[beatIndex]` silently
+// renders `undefined` for the trailing beats. Catches that drift at
+// import time instead of leaving it to be noticed on the live scroll.
+if (process.env.NODE_ENV !== "production" && traceContent.beats.length !== TRACE_BEAT_COUNT) {
+  throw new Error(
+    `traceContent.beats has ${traceContent.beats.length} entries, but trace-scene.ts expects ${TRACE_BEAT_COUNT}.`
+  );
+}
 
 // Viewport-heights of scroll consumed while the canvas is pinned. Long
 // enough that all six beats get room to read, short enough it doesn't
@@ -149,6 +164,10 @@ export function ProvenanceTrace() {
       data-ambient="slate"
       className="relative scroll-mt-20 bg-slate"
     >
+      {/* The visible caption below is a short, rotating phrase tied to
+          scroll position, not a stable section title, so heading
+          navigation needs its own real heading here instead. */}
+      <h2 className="sr-only">How RAEY finds an answer</h2>
       <p className="sr-only">
         {traceContent.staticCaption} A hospital&rsquo;s approved protocols are indexed
         and versioned. A question is matched to one approved source. The exact passage

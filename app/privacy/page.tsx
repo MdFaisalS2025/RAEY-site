@@ -26,9 +26,7 @@ export default function PrivacyPage() {
         </div>
 
         <p className="text-small mt-14 text-ink-2">
-          {isPlaceholder(siteConfig.contactEmail) ? (
-            "A direct contact route for privacy questions isn't published yet."
-          ) : (
+          {!isPlaceholder(siteConfig.contactEmail) ? (
             <>
               Questions about any of this? Reach us at{" "}
               <a
@@ -39,6 +37,19 @@ export default function PrivacyPage() {
               </a>
               .
             </>
+          ) : !isPlaceholder(siteConfig.linkedIn) ? (
+            <>
+              Questions about any of this? Reach us on{" "}
+              <a
+                href={siteConfig.linkedIn}
+                className="text-trace underline underline-offset-2 hover:opacity-70"
+              >
+                LinkedIn
+              </a>
+              .
+            </>
+          ) : (
+            "A direct contact route for privacy questions isn't published yet."
           )}
         </p>
       </Container>

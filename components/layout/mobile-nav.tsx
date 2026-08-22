@@ -92,22 +92,21 @@ export function MobileNav() {
       </button>
 
       {open && (
-        <div
-          ref={panelRef}
-          id={panelId}
-          className="fixed inset-x-0 top-16 z-30 flex flex-col gap-1 border-t border-rule bg-paper p-4"
-        >
-          {siteConfig.nav.map((item) =>
-            item.href.startsWith("#") ? (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className="text-body rounded-sm px-2 py-3 text-ink transition-colors hover:bg-paper-raised"
-              >
-                {item.label}
-              </a>
-            ) : (
+        <>
+          <div
+            className="fixed inset-0 top-16 z-20 bg-ink/20"
+            aria-hidden="true"
+            onClick={() => setOpen(false)}
+          />
+          <div
+            ref={panelRef}
+            id={panelId}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
+            className="fixed inset-x-0 top-16 z-30 flex flex-col gap-1 border-t border-rule bg-paper p-4"
+          >
+            {siteConfig.nav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -116,16 +115,16 @@ export function MobileNav() {
               >
                 {item.label}
               </Link>
-            )
-          )}
-          <a
-            href={siteConfig.cta.href}
-            onClick={() => setOpen(false)}
-            className="text-body mt-1 border border-ink px-2 py-3 text-center font-medium text-ink"
-          >
-            {siteConfig.cta.label}
-          </a>
-        </div>
+            ))}
+            <Link
+              href={siteConfig.cta.href}
+              onClick={() => setOpen(false)}
+              className="text-body mt-1 border border-ink px-2 py-3 text-center font-medium text-ink"
+            >
+              {siteConfig.cta.label}
+            </Link>
+          </div>
+        </>
       )}
     </div>
   );

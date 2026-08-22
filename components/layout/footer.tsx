@@ -21,13 +21,12 @@ export function Footer() {
             >
               {siteConfig.contactEmail}
             </a>
+          ) : hasLinkedIn ? (
+            <a href={siteConfig.linkedIn} className="transition-colors hover:text-ink">
+              Reach us on LinkedIn
+            </a>
           ) : (
             <span>Contact details coming soon</span>
-          )}
-          {hasLinkedIn && (
-            <a href={siteConfig.linkedIn} className="transition-colors hover:text-ink">
-              LinkedIn
-            </a>
           )}
           <Link href="/product" className="transition-colors hover:text-ink">
             Product

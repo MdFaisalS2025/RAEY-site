@@ -38,14 +38,15 @@ export function Header() {
   // were. rootMargin shrinks the observed viewport to a thin band
   // around its center, so "active" tracks whichever section's heading
   // has actually scrolled past that point, not just whichever is
-  // technically on screen.
+  // technically on screen. Only meaningful on "/" — a hash href like
+  // "/#pilot" has no matching id to observe on any other route, and a
+  // full route like "/product" isn't a scroll target at all; both are
+  // filtered out below.
   useEffect(() => {
-    // Only in-page anchors (hash hrefs) participate in scroll-spy — a
-    // full route like /product isn't a CSS selector and has no section
-    // to observe; its active state is derived from pathname instead.
+    if (pathname !== "/") return;
     const targets = siteConfig.nav
-      .filter((item) => item.href.startsWith("#"))
-      .map((item) => document.querySelector(item.href))
+      .filter((item) => item.href.includes("#"))
+      .map((item) => document.querySelector(`#${item.href.split("#")[1]}`))
       .filter((el): el is Element => el !== null);
     if (targets.length === 0) return;
 
@@ -58,7 +59,7 @@ export function Header() {
     );
     targets.forEach((target) => observer.observe(target));
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   return (
     <header
@@ -77,29 +78,21 @@ export function Header() {
         <div className="flex items-center gap-8">
           <nav aria-label="Primary" className="hidden items-center gap-6 sm:flex">
             {siteConfig.nav.map((item) => {
-              const isHash = item.href.startsWith("#");
-              const active = isHash ? item.href === activeHref : pathname === item.href;
-              const linkClassName = `text-meta transition-colors ${
-                active ? "text-ink" : "text-ink-3 hover:text-ink"
-              }`;
-              if (isHash) {
-                return (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    aria-current={active ? "location" : undefined}
-                    className={linkClassName}
-                  >
-                    {item.label}
-                  </a>
-                );
-              }
+              const isHash = item.href.includes("#");
+              // A hash target is only "current" while actually on "/" and
+              // scrolled to that section; on any other route it's just a
+              // link back home, never the active nav item.
+              const active = isHash
+                ? pathname === "/" && `#${item.href.split("#")[1]}` === activeHref
+                : pathname === item.href;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   aria-current={active ? "location" : undefined}
-                  className={linkClassName}
+                  className={`text-meta transition-colors ${
+                    active ? "text-ink" : "text-ink-3 hover:text-ink"
+                  }`}
                 >
                   {item.label}
                 </Link>

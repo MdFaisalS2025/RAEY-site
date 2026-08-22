@@ -9,14 +9,19 @@ export const siteConfig = {
   companyName: "RAEY",
   tagline: "Hospital-approved answers, not internet guesses.",
 
+  // Hash hrefs are absolute-path-prefixed ("/#section") rather than bare
+  // ("#section") on purpose: Header and Footer mount in the root layout,
+  // so they render on every route, and a bare hash resolves against
+  // whatever page you're currently on ("/product#pilot" has no such id)
+  // instead of always going home first.
   nav: [
-    { label: "How it works", href: "#how-it-works" },
+    { label: "How it works", href: "/#how-it-works" },
     { label: "Product", href: "/product" },
-    { label: "Transparency", href: "#transparency" },
+    { label: "Transparency", href: "/#transparency" },
   ],
 
-  cta: { label: "Request pilot", href: "#pilot" },
-  ctaSecondary: { label: "See how it works", href: "#how-it-works" },
+  cta: { label: "Request pilot", href: "/#pilot" },
+  ctaSecondary: { label: "See how it works", href: "/#how-it-works" },
 
   // TODO(client:contact-email) — real inbox for demo requests / fallback
   // when the Resend form is unavailable.

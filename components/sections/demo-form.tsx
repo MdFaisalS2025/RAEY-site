@@ -30,6 +30,7 @@ function Field({
   required = false,
   autoComplete,
   describedBy,
+  invalid = false,
 }: {
   label: string;
   name: string;
@@ -37,6 +38,7 @@ function Field({
   required?: boolean;
   autoComplete?: string;
   describedBy?: string;
+  invalid?: boolean;
 }) {
   return (
     <div className="group">
@@ -54,6 +56,7 @@ function Field({
         required={required}
         autoComplete={autoComplete}
         aria-describedby={describedBy}
+        aria-invalid={invalid || undefined}
         className="text-small mt-2 w-full border border-slate-rule bg-transparent px-3.5 py-2.5 text-slate-ink focus-visible:border-[color:var(--color-trace-light)] focus-visible:outline-none"
       />
     </div>
@@ -67,6 +70,7 @@ function Field({
 export function DemoForm() {
   const [state, formAction] = useActionState(requestDemo, initialState);
   const successRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (state.status === "success") {
@@ -74,8 +78,19 @@ export function DemoForm() {
       // whole form when the success panel swaps in; without this, focus
       // silently falls back to <body> and nothing is announced.
       successRef.current?.focus();
+      return;
     }
-  }, [state.status]);
+    // On error, move focus to the first field the error actually
+    // concerns — without this only the success path ever moved focus,
+    // so a screen-reader user submitting an invalid form heard nothing
+    // change and stayed exactly where they were.
+    const firstInvalidField = state.status === "error" ? state.fields?.[0] : undefined;
+    if (firstInvalidField) {
+      formRef.current
+        ?.querySelector<HTMLInputElement>(`[name="${firstInvalidField}"]`)
+        ?.focus();
+    }
+  }, [state]);
 
   if (state.status === "success") {
     return (
@@ -101,8 +116,10 @@ export function DemoForm() {
   const describedByFor = (name: string) =>
     hasError && state.fields?.includes(name) ? ERROR_ID : undefined;
 
+  const invalidFor = (name: string) => hasError && !!state.fields?.includes(name);
+
   return (
-    <form action={formAction} className="space-y-5 border border-slate-rule p-6">
+    <form ref={formRef} action={formAction} className="space-y-5 border border-slate-rule p-6">
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
           label="Name"
@@ -110,6 +127,7 @@ export function DemoForm() {
           required
           autoComplete="name"
           describedBy={describedByFor("name")}
+          invalid={invalidFor("name")}
         />
         <Field label="Role" name="role" autoComplete="organization-title" />
       </div>
@@ -120,6 +138,7 @@ export function DemoForm() {
           required
           autoComplete="organization"
           describedBy={describedByFor("institution")}
+          invalid={invalidFor("institution")}
         />
         <Field
           label="Email"
@@ -128,6 +147,7 @@ export function DemoForm() {
           required
           autoComplete="email"
           describedBy={describedByFor("email")}
+          invalid={invalidFor("email")}
         />
       </div>
       <div className="group">

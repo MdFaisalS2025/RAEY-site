@@ -41,12 +41,23 @@ function Annotate({ children }: { children: string }) {
 export function InterfaceShowcase() {
   const [activeDoc, setActiveDoc] = useState(0);
   const [hoveredLine, setHoveredLine] = useState<number | null>(null);
+  // Hover/focus highlights transiently; a click pins the same highlight
+  // so it survives the mouse leaving or focus moving on, which is what
+  // makes the citation button's "Show source line" label actually true
+  // rather than describing an effect only hover produced.
+  const [pinnedLine, setPinnedLine] = useState<number | null>(null);
+  const activeLine = pinnedLine ?? hoveredLine;
   const panelRef = useRef<HTMLDivElement>(null);
   const doc = c.documents[activeDoc];
 
   function selectDoc(i: number) {
     setActiveDoc(i);
     setHoveredLine(null);
+    setPinnedLine(null);
+  }
+
+  function togglePin(line: number | null) {
+    setPinnedLine((current) => (current === line ? null : line));
   }
 
   // Once the panel scrolls into view, briefly demonstrate the
@@ -126,7 +137,7 @@ export function InterfaceShowcase() {
                       <li key={item.libraryLabel}>
                         <button
                           type="button"
-                          aria-pressed={active}
+                          aria-current={active ? "true" : undefined}
                           onClick={() => selectDoc(i)}
                           className={`w-full border-l-2 py-1 pl-3 text-left text-small transition-colors focus-visible:outline-none ${
                             active
@@ -171,9 +182,11 @@ export function InterfaceShowcase() {
                               onMouseLeave={() => setHoveredLine(null)}
                               onFocus={() => setHoveredLine(sentence.sourceLine)}
                               onBlur={() => setHoveredLine(null)}
+                              onClick={() => togglePin(sentence.sourceLine)}
                               aria-label={`Show source line for citation ${sentence.citation}`}
+                              aria-pressed={pinnedLine === sentence.sourceLine}
                               className={`ml-0.5 rounded-sm px-0.5 text-micro font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-trace focus-visible:outline-offset-1 ${
-                                hoveredLine === sentence.sourceLine
+                                activeLine === sentence.sourceLine
                                   ? "bg-trace text-paper"
                                   : "text-trace hover:bg-trace/15"
                               }`}
@@ -204,8 +217,18 @@ export function InterfaceShowcase() {
 
                 <div className="mt-5 space-y-2 border-t border-rule pt-5 font-mono">
                   {doc.source.lines.map((line, i) => {
-                    const cited = doc.answer.some((a) => a.sourceLine === i);
-                    const active = hoveredLine === i;
+                    // sourceLine is only ever a real index on the "verified"
+                    // branch of the union (the "flagged" branch's is always
+                    // null), so this find can only ever match that branch —
+                    // but TypeScript can't infer that from the predicate, so
+                    // the state check below narrows it explicitly instead of
+                    // asserting past the type error.
+                    const citingSentence = doc.answer.find(
+                      (a): a is typeof a & { state: "verified" } =>
+                        a.state === "verified" && a.sourceLine === i
+                    );
+                    const cited = citingSentence !== undefined;
+                    const active = activeLine === i;
                     const toneClassName = active
                       ? "bg-trace text-paper"
                       : cited
@@ -231,6 +254,9 @@ export function InterfaceShowcase() {
                         onMouseLeave={() => setHoveredLine(null)}
                         onFocus={() => setHoveredLine(i)}
                         onBlur={() => setHoveredLine(null)}
+                        onClick={() => togglePin(i)}
+                        aria-label={`Source line for citation ${citingSentence.citation}`}
+                        aria-pressed={pinnedLine === i}
                         className={`block w-full rounded-sm text-left text-micro leading-relaxed transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-trace focus-visible:outline-offset-1 ${toneClassName}`}
                       >
                         {line}

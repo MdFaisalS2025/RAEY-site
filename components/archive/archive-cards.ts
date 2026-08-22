@@ -5,7 +5,7 @@
  * reloads rather than reshuffling every mount.
  */
 
-export interface ArchiveCard {
+interface ArchiveCard {
   id: number;
   leftPct: number;
   topPct: number;
